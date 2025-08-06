@@ -1,0 +1,119 @@
+{
+  "name": "aegntic-hive-ccheavy",
+  "version": "1.0.0",
+  "description": "Claude Code Heavy (ccheavy) optimized configuration for high-performance operations",
+  "type": "performance-optimized",
+  "
+": {
+    "performance": {
+      "concurrentRequests": 8,
+      "processingTimeout": 60000,
+      "memoryThreshold": "1GB",
+      "cpuThreshold": 80
+    },
+    "database": {
+      "connectionPooling": true,
+      "maxConnections": 10,
+      "batchSize": 100,
+      "asyncOperations": true,
+      "pragmaSettings": {
+        "journal_mode": "WAL",
+        "synchronous": "NORMAL",
+        "cache_size": 10000,
+        "temp_store": "MEMORY",
+        "mmap_size": 268435456
+      }
+    },
+    "scraping": {
+      "parallelBrowsers": 4,
+      "maxRetries": 3,
+      "retryDelay": 2000,
+      "headless": "new",
+      "browserArgs": [
+        "--no-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-gpu",
+        "--memory-pressure-off",
+        "--max_old_space_size=2048"
+      ],
+      "sessionPersistence": "enhanced",
+      "cookieTimeout": 3600000
+    },
+    "memory": {
+      "streamProcessing": true,
+      "chunkSize": 1000,
+      "garbageCollection": "aggressive",
+      "cacheSize": 1000,
+      "cacheTTL": 300000
+    },
+    "search": {
+      "indexingStrategy": "realtime",
+      "vectorEmbeddings": true,
+      "semanticSearch": true,
+      "cacheResults": true,
+      "maxResults": 1000
+    },
+    "neural": {
+      "routingEnabled": true,
+      "predictionAccuracy": 0.85,
+      "learningRate": 0.1,
+      "patternRecognition": true,
+      "adaptiveWeighting": true
+    }
+  },
+  "features": {
+    "processPooling": {
+      "enabled": true,
+      "maxProcesses": 5,
+      "processRotation": true,
+      "healthChecks": true
+    },
+    "caching": {
+      "multilevel": true,
+      "compression": true,
+      "distributedCache": false,
+      "cacheStrategies": ["LRU", "TTL", "memory"]
+    },
+    "monitoring": {
+      "realtime": true,
+      "metrics": ["cpu", "memory", "database", "network"],
+      "alerts": true,
+      "dashboardEnabled": true
+    },
+    "errorHandling": {
+      "circuitBreaker": true,
+      "exponentialBackoff": true,
+      "fallbackStrategies": true,
+      "errorRecovery": "automatic"
+    }
+  },
+  "thresholds": {
+    "complexity": 0.8,
+    "tokenLimit": 50000,
+    "responseTime": 5000,
+    "memoryUsage": 0.8,
+    "errorRate": 0.05
+  },
+  "routes": {
+    "codeGeneration": {
+      "priority": "high",
+      "timeout": 30000,
+      "parallelProcessing": true
+    },
+    "dataProcessing": {
+      "priority": "medium",
+      "timeout": 15000,
+      "streamingEnabled": true
+    },
+    "analysis": {
+      "priority": "high",
+      "timeout": 20000,
+      "cachingEnabled": true
+    }
+  },
+  "compatibility": {
+    "claudeCode": ">=1.0.0",
+    "nodeVersion": ">=18.0.0",
+    "platforms": ["linux", "darwin", "win32"]
+  }
+}

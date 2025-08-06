@@ -1,0 +1,169 @@
+{
+  "name": "aegntic-hive-ccr",
+  "version": "1.0.0",
+  "description": "Custom Configuration Routing (CCR) system for intelligent request routing",
+  "type": "routing-optimized",
+  "routing": {
+    "strategy": "intelligent",
+    "algorithms": ["neural", "performance", "load-based", "priority"],
+    "fallback": "round-robin",
+    "adaptiveLearning": true
+  },
+  "configurations": {
+    "codeReview": {
+      "name": "Code Review Optimized",
+      "priority": "high",
+      "features": {
+        "syntaxHighlighting": true,
+        "semanticAnalysis": true,
+        "patternDetection": true,
+        "securityScanning": true,
+        "qualityMetrics": true
+      },
+      "performance": {
+        "timeout": 45000,
+        "concurrency": 4,
+        "caching": true,
+        "memoryLimit": "512MB"
+      },
+      "triggers": {
+        "fileTypes": [".js", ".ts", ".py", ".java", ".cpp", ".c", ".go", ".rs"],
+        "keywords": ["review", "analyze", "check", "lint", "quality"],
+        "patterns": ["code review", "pull request", "diff analysis"]
+      }
+    },
+    "dataAnalysis": {
+      "name": "Data Analysis Optimized",
+      "priority": "medium",
+      "features": {
+        "statisticalAnalysis": true,
+        "visualization": true,
+        "patternRecognition": true,
+        "trendAnalysis": true,
+        "reportGeneration": true
+      },
+      "performance": {
+        "timeout": 60000,
+        "concurrency": 6,
+        "streaming": true,
+        "memoryLimit": "1GB"
+      },
+      "triggers": {
+        "fileTypes": [".csv", ".json", ".xlsx", ".sql", ".db"],
+        "keywords": ["analyze", "data", "statistics", "trends", "insights"],
+        "patterns": ["data analysis", "statistical", "metrics"]
+      }
+    },
+    "projectManagement": {
+      "name": "Project Management Optimized",
+      "priority": "medium",
+      "features": {
+        "taskTracking": true,
+        "dependencyMapping": true,
+        "progressReporting": true,
+        "resourceAllocation": true,
+        "timelineManagement": true
+      },
+      "performance": {
+        "timeout": 30000,
+        "concurrency": 3,
+        "persistence": true,
+        "memoryLimit": "256MB"
+      },
+      "triggers": {
+        "keywords": ["project", "task", "milestone", "timeline", "manage"],
+        "patterns": ["project management", "task tracking", "planning"]
+      }
+    },
+    "conversationProcessing": {
+      "name": "Conversation Processing Optimized",
+      "priority": "high",
+      "features": {
+        "nlpProcessing": true,
+        "sentimentAnalysis": true,
+        "topicExtraction": true,
+        "summaryGeneration": true,
+        "searchOptimization": true
+      },
+      "performance": {
+        "timeout": 25000,
+        "concurrency": 8,
+        "streaming": true,
+        "memoryLimit": "768MB"
+      },
+      "triggers": {
+        "services": ["chatgpt", "grok", "gemini", "claude"],
+        "keywords": ["conversation", "chat", "message", "dialogue"],
+        "patterns": ["conversation analysis", "chat processing"]
+      }
+    }
+  },
+  "selectionCriteria": {
+    "weights": {
+      "fileType": 0.3,
+      "keywords": 0.25,
+      "patterns": 0.2,
+      "complexity": 0.15,
+      "performance": 0.1
+    },
+    "thresholds": {
+      "confidence": 0.7,
+      "performance": 0.8,
+      "availability": 0.95
+    }
+  },
+  "learning": {
+    "enabled": true,
+    "adaptationRate": 0.1,
+    "feedbackWeight": 0.3,
+    "performanceTracking": true,
+    "patternRecognition": true,
+    "modelUpdate": {
+      "frequency": "daily",
+      "threshold": 0.05,
+      "backup": true
+    }
+  },
+  "monitoring": {
+    "realtime": true,
+    "metrics": {
+      "routingAccuracy": true,
+      "responseTime": true,
+      "configurationUsage": true,
+      "errorRates": true,
+      "userSatisfaction": true
+    },
+    "alerting": {
+      "enabled": true,
+      "thresholds": {
+        "accuracy": 0.8,
+        "responseTime": 10000,
+        "errorRate": 0.1
+      }
+    }
+  },
+  "fallback": {
+    "strategies": ["performance-based", "load-based", "random"],
+    "timeout": 5000,
+    "retries": 2,
+    "escalation": true
+  },
+  "integration": {
+    "mcp": {
+      "protocolVersion": "0.4.0",
+      "toolIntegration": true,
+      "resourceAccess": true
+    },
+    "claude": {
+      "codeSupport": true,
+      "contextAware": true,
+      "streamingEnabled": true
+    }
+  },
+  "security": {
+    "rateLimiting": true,
+    "accessControl": false,
+    "encryption": false,
+    "auditLogging": true
+  }
+}
