@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/cover-16x9.jpg" alt="aegntic-hive-mcp — Enterprise-grade MCP integration system with 45% performance improvement through parallel processing, military-grade security" width="100%" />
+</p>
+
 # Aegntic Hive MCP Integration System
 
 **Advanced Model Context Protocol Integration with Parallel Processing & Enterprise Security**
