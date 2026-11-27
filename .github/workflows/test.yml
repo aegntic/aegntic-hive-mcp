@@ -70,7 +70,7 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Run full test suite (serial: suites share one SQLite file)
+    - name: Run full test suite (serial, suites share one SQLite file)
       run: npm test -- --runInBand
 
     - name: Run TDD mode (short)
