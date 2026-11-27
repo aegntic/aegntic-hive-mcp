@@ -1,43 +1,46 @@
 /**
  * Scraper Mock for London School TDD
- * Mocks web scraping operations for isolated testing
+ * Mocks web scraping operations for isolated testing.
+ *
+ * Method doubles are jest.fn()s with sinon-style behaviour helpers
+ * (see tests/mocks/stub-factory.js).
  */
 
-const sinon = require('sinon');
+const { createStub } = require('./stub-factory');
 
 class MockConversationScraper {
   constructor() {
     this.browser = null;
     this.pages = new Map();
     this.sessions = new Map();
-    
+
     // Setup method stubs
-    this.init = sinon.stub();
-    this.close = sinon.stub();
-    this.loginToService = sinon.stub();
-    this.scrapeAll = sinon.stub();
-    this.scrapeChatgpt = sinon.stub();
-    this.scrapeGrok = sinon.stub();
-    this.scrapeGemini = sinon.stub();
-    this.scrapeClaude = sinon.stub();
-    this.loadSessions = sinon.stub();
-    this.saveSession = sinon.stub();
-    
+    this.init = createStub();
+    this.close = createStub();
+    this.loginToService = createStub();
+    this.scrapeAll = createStub();
+    this.scrapeChatgpt = createStub();
+    this.scrapeGrok = createStub();
+    this.scrapeGemini = createStub();
+    this.scrapeClaude = createStub();
+    this.loadSessions = createStub();
+    this.saveSession = createStub();
+
     this.setupDefaultBehaviors();
   }
-  
+
   setupDefaultBehaviors() {
     // Mock initialization
     this.init.resolves();
     this.close.resolves();
-    
+
     // Mock login
     this.loginToService.resolves();
-    
+
     // Mock session management
-    this.loadSessions.returns();
-    this.saveSession.returns();
-    
+    this.loadSessions.resolves();
+    this.saveSession.resolves();
+
     // Mock scraping operations
     const mockConversations = [
       {
@@ -51,7 +54,7 @@ class MockConversationScraper {
             order: 1
           },
           {
-            role: 'assistant', 
+            role: 'assistant',
             content: 'Hi there!',
             order: 2
           }
@@ -75,12 +78,12 @@ class MockConversationScraper {
         ]
       }
     ];
-    
+
     this.scrapeChatgpt.resolves(mockConversations);
     this.scrapeGrok.resolves(mockConversations.map(c => ({ ...c, id: c.id.replace('conv', 'grok') })));
     this.scrapeGemini.resolves(mockConversations.map(c => ({ ...c, id: c.id.replace('conv', 'gemini') })));
     this.scrapeClaude.resolves(mockConversations.map(c => ({ ...c, id: c.id.replace('conv', 'claude') })));
-    
+
     this.scrapeAll.resolves({
       chatgpt: mockConversations,
       grok: mockConversations.map(c => ({ ...c, id: c.id.replace('conv', 'grok') })),
@@ -88,34 +91,35 @@ class MockConversationScraper {
       claude: mockConversations.map(c => ({ ...c, id: c.id.replace('conv', 'claude') }))
     });
   }
-  
+
   // Mock browser operations
   async createPage(url) {
     const mockPage = {
-      goto: sinon.stub().resolves(),
-      waitForSelector: sinon.stub().resolves(),
-      click: sinon.stub().resolves(),
-      type: sinon.stub().resolves(),
-      evaluate: sinon.stub().resolves([]),
-      $: sinon.stub().resolves(null),
-      $$: sinon.stub().resolves([]),
-      close: sinon.stub().resolves()
+      goto: createStub().resolves(),
+      waitForSelector: createStub().resolves(),
+      click: createStub().resolves(),
+      type: createStub().resolves(),
+      evaluate: createStub().resolves([]),
+      $: createStub().resolves(null),
+      $$: createStub().resolves([]),
+      close: createStub().resolves()
     };
-    
+
     this.pages.set(url, mockPage);
     return mockPage;
   }
-  
+
   // Mock authentication
   async authenticateService(service, credentials) {
     return { success: true, sessionId: `${service}-session-123` };
   }
-  
+
   // Mock data extraction
   async extractConversationData(page, service) {
-    return this.setupDefaultBehaviors()[`scrape${service.charAt(0).toUpperCase() + service.slice(1)}`]();
+    const method = `scrape${service.charAt(0).toUpperCase() + service.slice(1)}`;
+    return this[method]();
   }
-  
+
   // Test utilities
   reset() {
     this.init.reset();
@@ -128,13 +132,13 @@ class MockConversationScraper {
     this.scrapeClaude.reset();
     this.loadSessions.reset();
     this.saveSession.reset();
-    
+
     this.pages.clear();
     this.sessions.clear();
-    
+
     this.setupDefaultBehaviors();
   }
-  
+
   // Configure specific responses for tests
   configureServiceResponse(service, response) {
     const method = `scrape${service.charAt(0).toUpperCase() + service.slice(1)}`;
@@ -142,25 +146,30 @@ class MockConversationScraper {
       this[method].resolves(response);
     }
   }
-  
+
   configureError(method, error) {
     if (this[method]) {
       this[method].rejects(error);
     }
   }
-  
+
   // Simulate authentication failure
   simulateAuthFailure(service) {
-    this.loginToService.withArgs(service).rejects(new Error(`Authentication failed for ${service}`));
+    this.loginToService.mockImplementation((target) => {
+      if (target === service) {
+        return Promise.reject(new Error(`Authentication failed for ${service}`));
+      }
+      return Promise.resolve();
+    });
   }
-  
+
   // Simulate network timeout
   simulateTimeout(method) {
     if (this[method]) {
       this[method].rejects(new Error('Network timeout'));
     }
   }
-  
+
   // Simulate rate limiting
   simulateRateLimit(service) {
     const method = `scrape${service.charAt(0).toUpperCase() + service.slice(1)}`;

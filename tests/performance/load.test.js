@@ -3,8 +3,6 @@
  * Tests system performance under various load conditions
  */
 
-const { jest } = require('@jest/globals');
-
 // Import server for performance testing
 const AIConversationsMCP = require('../../server.js');
 
@@ -31,7 +29,7 @@ describe('Performance Tests', () => {
       
       // Create test project
       const projectResult = await server.handleCreateProject('Performance Test', 'Load testing', 'Test');
-      const projectId = parseInt(projectResult.content[0].text.match(/ID: (\\d+)/)[1]);
+      const projectId = parseInt(projectResult.content[0].text.match(/ID: (\d+)/)[1]);
       
       // Prepare bulk insertions
       for (let i = 0; i < conversationCount; i++) {
@@ -93,7 +91,7 @@ describe('Performance Tests', () => {
     test('should handle large result sets efficiently', async () => {
       // First, insert many conversations
       const projectResult = await server.handleCreateProject('Large Dataset Test', 'Test', 'Test');
-      const projectId = parseInt(projectResult.content[0].text.match(/ID: (\\d+)/)[1]);
+      const projectId = parseInt(projectResult.content[0].text.match(/ID: (\d+)/)[1]);
       
       const insertCount = 500;
       const insertPromises = [];

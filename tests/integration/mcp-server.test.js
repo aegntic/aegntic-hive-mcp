@@ -3,8 +3,10 @@
  * Tests the complete MCP protocol interaction and real component integration
  */
 
-const { jest } = require('@jest/globals');
-const { TestTransport } = require('@modelcontextprotocol/sdk/server/index.js');
+const {
+  TestTransport,
+  ListToolsRequestSchema
+} = require('@modelcontextprotocol/sdk/server/index.js');
 
 // Import without mocking for integration tests
 const AIConversationsMCP = require('../../server.js');
@@ -39,17 +41,10 @@ describe('MCP Server Integration Tests', () => {
         method: 'tools/list',
         params: {}
       };
-      
-      // Mock the transport's request handling
-      const mockHandler = jest.fn().mockResolvedValue({
-        tools: expect.any(Array)
-      });
-      
-      server.server.setRequestHandler = jest.fn();
-      
-      // Verify handler registration
-      expect(server.server.setRequestHandler).toHaveBeenCalled();
-      
+
+      // Verify handler registration (handlers are registered in setupHandlers)
+      expect(typeof server.server.getRequestHandler(ListToolsRequestSchema)).toBe('function');
+
       // Test that we can get tools list
       const tools = await server.server.request(listToolsRequest);
       expect(Array.isArray(tools?.tools || [])).toBe(true);
@@ -354,7 +349,7 @@ describe('MCP Server Integration Tests', () => {
       
       // All should have different IDs
       const ids = results.map(result => {
-        const match = result.content[0].text.match(/ID: (\\d+)/);
+        const match = result.content[0].text.match(/ID: (\d+)/);
         return match ? parseInt(match[1]) : null;
       }).filter(id => id !== null);
       
@@ -400,7 +395,7 @@ describe('MCP Server Integration Tests', () => {
         'Test instructions'
       );
       
-      const projectId = parseInt(createResult.content[0].text.match(/ID: (\\d+)/)[1]);
+      const projectId = parseInt(createResult.content[0].text.match(/ID: (\d+)/)[1]);
       
       // Add multiple artifacts
       const artifacts = [

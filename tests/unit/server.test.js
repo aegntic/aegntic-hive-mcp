@@ -3,8 +3,6 @@
  * Tests behavior through mocked dependencies
  */
 
-const { jest } = require('@jest/globals');
-
 // Mock all dependencies before importing the main class
 jest.mock('../../database.js', () => require('../mocks/database.mock.js'));
 jest.mock('../../scrapers.js', () => require('../mocks/scraper.mock.js'));
@@ -13,7 +11,11 @@ jest.mock('../../src/integrations/graphiti/graphiti-adapter.js', () => require('
 jest.mock('../../src/core/short-term-memory.js', () => require('../mocks/memory-system.mock.js').MockShortTermMemory);
 jest.mock('../../src/core/memory-bridge.js', () => require('../mocks/memory-system.mock.js').MockMemoryBridge);
 
-const { Server } = require('@modelcontextprotocol/sdk/server/index.js');
+const {
+  Server,
+  ListToolsRequestSchema,
+  CallToolRequestSchema
+} = require('@modelcontextprotocol/sdk/server/index.js');
 
 describe('AIConversationsMCP Server', () => {
   let server;
@@ -65,14 +67,9 @@ describe('AIConversationsMCP Server', () => {
   
   describe('Tool Registration', () => {
     test('should register all required tools', async () => {
-      const mockListToolsHandler = jest.fn().mockResolvedValue({
-        tools: []
-      });
-      
-      server.server.setRequestHandler = jest.fn();
-      
-      // Verify that setRequestHandler was called for ListTools
-      expect(server.server.setRequestHandler).toHaveBeenCalled();
+      // Request handlers are registered in the constructor (setupHandlers)
+      expect(typeof server.server.getRequestHandler(ListToolsRequestSchema)).toBe('function');
+      expect(typeof server.server.getRequestHandler(CallToolRequestSchema)).toBe('function');
     });
     
     test('should register conversation management tools', async () => {

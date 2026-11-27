@@ -3,8 +3,6 @@
  * Common utilities for test setup and execution
  */
 
-const { jest } = require('@jest/globals');
-
 /**
  * Test data generators
  */

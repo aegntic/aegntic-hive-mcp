@@ -3,17 +3,17 @@
  * Mocks all memory components for isolated testing
  */
 
-const sinon = require('sinon');
+const { createStub } = require('./stub-factory');
 
 class MockMemoryOrchestrator {
   constructor() {
-    this.initialize = sinon.stub();
-    this.store = sinon.stub();
-    this.retrieve = sinon.stub();
-    this.promoteToStrategic = sinon.stub();
-    this.analyzeCorrelations = sinon.stub();
-    this.healthCheck = sinon.stub();
-    this.getStatistics = sinon.stub();
+    this.initialize = createStub();
+    this.store = createStub();
+    this.retrieve = createStub();
+    this.promoteToStrategic = createStub();
+    this.analyzeCorrelations = createStub();
+    this.healthCheck = createStub();
+    this.getStatistics = createStub();
     
     this.setupDefaultBehaviors();
   }
@@ -121,12 +121,12 @@ class MockMemoryOrchestrator {
 
 class MockGraphitiAdapter {
   constructor() {
-    this.initialize = sinon.stub();
-    this.searchMemory = sinon.stub();
-    this.storeMemory = sinon.stub();
-    this.getMetrics = sinon.stub();
-    this.getStatus = sinon.stub();
-    this.getMemoryCount = sinon.stub();
+    this.initialize = createStub();
+    this.searchMemory = createStub();
+    this.storeMemory = createStub();
+    this.getMetrics = createStub();
+    this.getStatus = createStub();
+    this.getMemoryCount = createStub();
     
     this.entityIndex = new Map();
     this.relationshipIndex = new Map();
@@ -202,14 +202,14 @@ class MockGraphitiAdapter {
 
 class MockShortTermMemory {
   constructor() {
-    this.initialize = sinon.stub();
-    this.store = sinon.stub();
-    this.retrieve = sinon.stub();
-    this.search = sinon.stub();
-    this.detectPatterns = sinon.stub();
-    this.getMetrics = sinon.stub();
-    this.getStatus = sinon.stub();
-    this.getEntryCount = sinon.stub();
+    this.initialize = createStub();
+    this.store = createStub();
+    this.retrieve = createStub();
+    this.search = createStub();
+    this.detectPatterns = createStub();
+    this.getMetrics = createStub();
+    this.getStatus = createStub();
+    this.getEntryCount = createStub();
     
     this.setupDefaultBehaviors();
   }
@@ -296,9 +296,9 @@ class MockShortTermMemory {
 
 class MockMemoryBridge {
   constructor() {
-    this.fuseResults = sinon.stub();
-    this.correlateMemories = sinon.stub();
-    this.transferContext = sinon.stub();
+    this.fuseResults = createStub();
+    this.correlateMemories = createStub();
+    this.transferContext = createStub();
     
     this.setupDefaultBehaviors();
   }

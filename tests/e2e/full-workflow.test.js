@@ -3,7 +3,6 @@
  * Tests realistic user scenarios from start to finish
  */
 
-const { jest } = require('@jest/globals');
 const mockFs = require('mock-fs');
 const path = require('path');
 
@@ -45,7 +44,7 @@ describe('End-to-End Workflow Tests', () => {
       );
       
       expect(projectResult).toBeValidMCPResponse();
-      const projectId = parseInt(projectResult.content[0].text.match(/ID: (\\d+)/)[1]);
+      const projectId = parseInt(projectResult.content[0].text.match(/ID: (\d+)/)[1]);
       
       // Step 2: Save multiple artifacts for the project
       const artifacts = [
@@ -259,7 +258,7 @@ app.listen(3000, () => {
         '/tmp': {
           'e2e-import-test.json': JSON.stringify(mockProjectData, null, 2)
         }
-      });
+      }, { createTmp: false });
       
       // Step 2: Import project
       const importResult = await server.handleImportProjectStructure(importPath);
@@ -403,7 +402,7 @@ const authMiddleware = (req, res, next) => {
         'Extract patterns and improve prompting strategies'
       );
       
-      const projectId = parseInt(projectResult.content[0].text.match(/ID: (\\d+)/)[1]);
+      const projectId = parseInt(projectResult.content[0].text.match(/ID: (\d+)/)[1]);
       
       // Step 2: Simulate scraped conversations (since we can't actually scrape in tests)
       const testConversations = [
@@ -429,7 +428,7 @@ const authMiddleware = (req, res, next) => {
             },
             {
               role: 'assistant',
-              content: 'Use parameterized queries instead of string concatenation. Here\\'s an example using prepared statements...',
+              content: 'Use parameterized queries instead of string concatenation. Here\'s an example using prepared statements...',
               order: 4
             }
           ]
@@ -577,7 +576,7 @@ const authMiddleware = (req, res, next) => {
             `Instructions for project ${i}`
           );
           
-          const projectId = parseInt(projectResult.content[0].text.match(/ID: (\\d+)/)[1]);
+          const projectId = parseInt(projectResult.content[0].text.match(/ID: (\d+)/)[1]);
           
           // Add artifacts
           await server.handleSaveArtifact(

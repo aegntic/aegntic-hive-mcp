@@ -1852,6 +1852,10 @@ class AIConversationsMCP {
   }
 }
 
+// Export the class so the Jest test suites can construct it.
+// Running as an MCP server keeps working via the auto-start below.
+module.exports = AIConversationsMCP;
+
 // Handle cleanup
 process.on('SIGINT', async () => {
   console.error('Shutting down...');
